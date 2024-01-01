@@ -34,7 +34,10 @@
         "laravel": {
             "providers": [
                 "Brunocfalcao\\VimeoClient\\VimeoClientServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "VimeoClient": "Brunocfalcao\\VimeoClient\\VimeoClientFacade"
+            }
         }
     }
 }

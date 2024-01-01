@@ -2,6 +2,7 @@
 
 namespace Brunocfalcao\VimeoClient;
 
+use Brunocfalcao\VimeoClient\VimeoClient;
 use Illuminate\Support\ServiceProvider;
 
 class VimeoClientServiceProvider extends ServiceProvider
@@ -13,6 +14,8 @@ class VimeoClientServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        $this->app->bind('brunocfalcao-vimeo-client', function () {
+            return new VimeoClient();
+        });
     }
 }
