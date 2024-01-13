@@ -16,31 +16,36 @@ class VimeoClient extends Vimeo
         parent::__construct($client_id, $client_secret, $access_token, $tus_client_factory);
     }
 
-    public function renameFolder(string $name, string $uri)
+    public function getFolders()
     {
-        $url = "/users/{$this->user_id}/folders/{$uri}";
-
-        return $this->request(
-            $url,
-            [
-                'name' => $name,
-                'parent_folder_uri' => $parentUri,
-            ],
-            'PATCH'
-        );
+        return $this->request('/me/projects');
     }
 
-    public function createFolder(string $name, ?string $parentUri = null)
+    public function upsertFolder(string $name, ?string $uri = null, ?string $id = null)
     {
-        $url = "/users/{$this->user_id}/folders";
+        /**
+         * If there is no id, then it's an insert.
+         * If there is an uri, then it will create a sub-folder.
+         * If there is an id, then it's a folder name change.
+         */
+        $url = '/me/folders';
+        $params = ['name' => $name];
+        $method = 'POST';
+
+        if ($id) {
+            $url .= "/{$id}";
+            $method = 'PATCH';
+        }
+
+        if ($uri) {
+            // Then it's a sub-folder creation/replacement.
+            $params['parent_folder_uri'] = $uri;
+        }
 
         return $this->request(
             $url,
-            [
-                'name' => $name,
-                'parent_folder_uri' => $parentUri,
-            ],
-            'POST'
+            $params,
+            $method
         );
     }
 }
