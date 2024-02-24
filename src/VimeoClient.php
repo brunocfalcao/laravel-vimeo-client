@@ -21,6 +21,11 @@ class VimeoClient extends Vimeo
         return $this->request('/me/projects');
     }
 
+    public function uploadVideo(string $path, array $metadata = [])
+    {
+        dd('inside video upload');
+    }
+
     public function upsertFolder(string $name, ?string $uri = null, ?string $id = null)
     {
         /**
