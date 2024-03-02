@@ -16,14 +16,31 @@ class VimeoClient extends Vimeo
         parent::__construct($client_id, $client_secret, $access_token, $tus_client_factory);
     }
 
+    /*
     public function getFolders()
     {
         return $this->request('/me/projects');
     }
+    */
+
+    public function deleteFolder(string $vimeoId)
+    {
+        return $this->request('/me/projects/'.$vimeoId, [], 'DELETE');
+    }
+
+    public function deleteVideo(string $vimeoURI)
+    {
+        return $this->request($vimeoURI, [], 'DELETE');
+    }
 
     public function uploadVideo(string $path, array $metadata = [])
     {
-        dd('inside video upload');
+        return $this->upload($path, $metadata);
+    }
+
+    public function updateVideoDetails(string $videoId, array $data)
+    {
+        return $this->request('/videos/'.$videoId, $data, 'PATCH');
     }
 
     public function upsertFolder(string $name, ?string $uri = null, ?string $id = null)
