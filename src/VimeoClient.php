@@ -38,9 +38,9 @@ class VimeoClient extends Vimeo
         return $this->upload($path, $metadata);
     }
 
-    public function updateVideoDetails(string $videoId, array $data)
+    public function updateVideoDetails(string $videoUri, array $data)
     {
-        return $this->request('/videos/'.$videoId, $data, 'PATCH');
+        return $this->request($videoUri, $data, 'PATCH');
     }
 
     public function upsertFolder(string $name, ?string $uri = null, ?string $id = null)
