@@ -16,33 +16,43 @@ class VimeoClient extends Vimeo
         parent::__construct($client_id, $client_secret, $access_token, $tus_client_factory);
     }
 
-    /*
-    public function getFolders()
+    // https://developer.vimeo.com/api/reference/folders#add_video_to_project.
+    public function addVideoToFolder(string $folderURI, string $videoURI)
     {
-        return $this->request('/me/projects');
+        return $this->request($folderURI.$videoURI, [], 'PUT');
     }
-    */
 
+    // https://developer.vimeo.com/api/reference/folders#remove_video_from_project.
+    public function deleteVideoFromFolder(string $folderURI, string $videoURI)
+    {
+        return $this->request($folderURI.$videoURI, [], 'DELETE');
+    }
+
+    // https://developer.vimeo.com/api/reference/folders#delete_project.
     public function deleteFolder(string $vimeoId)
     {
         return $this->request('/me/projects/'.$vimeoId, [], 'DELETE');
     }
 
+    // https://developer.vimeo.com/api/reference/videos#delete_video.
     public function deleteVideo(string $vimeoURI)
     {
         return $this->request($vimeoURI, [], 'DELETE');
     }
 
+    // https://developer.vimeo.com/api/reference/videos#upload_video.
     public function uploadVideo(string $path, array $metadata = [])
     {
         return $this->upload($path, $metadata);
     }
 
+    // https://developer.vimeo.com/api/reference/videos#edit_video.
     public function updateVideoDetails(string $videoUri, array $data)
     {
         return $this->request($videoUri, $data, 'PATCH');
     }
 
+    // https://developer.vimeo.com/api/reference/folders#edit_project.
     public function upsertFolder(string $name, ?string $uri = null, ?string $id = null)
     {
         /**
