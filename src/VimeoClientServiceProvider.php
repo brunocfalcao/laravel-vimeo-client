@@ -53,7 +53,7 @@ class VimeoClientServiceProvider extends ServiceProvider
     protected function registerFactory()
     {
         $this->app->singleton('vimeo.factory', function (): VimeoFactory {
-            return new VimeoFactory();
+            return new VimeoFactory;
         });
 
         $this->app->alias('vimeo.factory', VimeoFactory::class);
